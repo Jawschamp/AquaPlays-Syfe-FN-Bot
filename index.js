@@ -20,7 +20,7 @@ const EGClient = require('epicgames-client').Client;
 const Fortnite = require('epicgames-fortnite-client');
 const { ESubGame } = Fortnite;
 let eg = new EGClient({
-  email: "",
+  email: "FNGQFN@gmail.com",
   password: "",
   debug: console.log,
   });
@@ -43,10 +43,10 @@ let eg = new EGClient({
       console.log(`Member#${member.id} joined!`);
       console.log(`Members count: ${fortnite.party.members.length}`);
       console.log(`Setting client party outfits to Member#${member.id}`)
-      fortnite.party.me.setOutfit("/Game/Athena/Items/Cosmetics/Characters/CID_313_Athena_Commando_M_KpopFashion.CID_313_Athena_Commando_M_KpopFashion");
-      fortnite.party.me.setBackpack("/Game/Athena/Items/Cosmetics/Backpacks/BID_138_Celestial.BID_138_Celestial");
-      fortnite.party.me.setEmote("/Game/Athena/Items/Cosmetics/Dances/EID_Breakboy.EID_Breakboy");
-      fortnite.party.me.setBattlePass(true, 99999999999999999999999999999999999999999999999999999999999, 420, 99999999999999999999999999999999999999999999999999999999999);
+      fortnite.party.me.setOutfit("/Game/Athena/Items/Cosmetics/Characters/CID_.CID_");
+      fortnite.party.me.setBackpack("/Game/Athena/Items/Cosmetics/Backpacks/CID_.CID_");
+      fortnite.party.me.setEmote("/Game/Athena/Items/Cosmetics/Dances/EID_.EID_");
+      fortnite.party.me.setBattlePass(true, 0, 0, 0);
     });
     fortnite.communicator.on('party:invitation', async (invitation) => {
       console.log("Party invitation found")
