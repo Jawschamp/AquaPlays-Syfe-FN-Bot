@@ -20,7 +20,7 @@ const EGClient = require('epicgames-client').Client;
 const Fortnite = require('epicgames-fortnite-client');
 const { ESubGame } = Fortnite;
 let eg = new EGClient({
-  email: "",
+  email: "FNGQFN@gmail.com",
   password: "",
   debug: console.log,
   });
