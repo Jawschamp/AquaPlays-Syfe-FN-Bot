@@ -1,62 +1,126 @@
-/*
-______ _____  _____   ____  _____     __          __  _______ _____ _    _  __      _______ _____  ______ ____    ______ ____  _____    ______ _______   ________  _____
-|  ____|  __ \|  __ \ / __ \|  __ \    \ \        / /\|__   __/ ____| |  | | \ \    / /_   _|  __ \|  ____/ __ \  |  ____/ __ \|  __ \  |  ____|_   _\ \ / /  ____|/ ____|
-| |__  | |__) | |__) | |  | | |__) |    \ \  /\  / /  \  | | | |    | |__| |  \ \  / /  | | | |  | | |__ | |  | | | |__ | |  | | |__) | | |__    | |  \ V /| |__  | (___
-|  __| |  _  /|  _  /| |  | |  _  /      \ \/  \/ / /\ \ | | | |    |  __  |   \ \/ /   | | | |  | |  __|| |  | | |  __|| |  | |  _  /  |  __|   | |   > < |  __|  \___ \
-| |____| | \ \| | \ \| |__| | | \ \ _     \  /\  / ____ \| | | |____| |  | |    \  /   _| |_| |__| | |___| |__| | | |   | |__| | | \ \  | |     _| |_ / . \| |____ ____) |
-|______|_|  \_\_|  \_\\____/|_|  \_( )     \/  \/_/    \_\_|  \_____|_|  |_|     \/   |_____|_____/|______\____/  |_|    \____/|_|  \_\ |_|    |_____/_/ \_\______|_____/
-                                  |/
-*/
-console.log("")
-console.log("   █████╗  ██████╗ ██╗   ██╗ █████╗      █████╗ ███╗   ██╗██████╗     ███████╗██╗   ██╗███████╗███████╗███████╗    ██╗      ██████╗ ██████╗ ██████╗ ██╗   ██╗    ██████╗  ██████╗ ████████╗")
-console.log("  ██╔══██╗██╔═══██╗██║   ██║██╔══██╗    ██╔══██╗████╗  ██║██╔══██╗    ██╔════╝╚██╗ ██╔╝██╔════╝██╔════╝██╔════╝    ██║     ██╔═══██╗██╔══██╗██╔══██╗╚██╗ ██╔╝    ██╔══██╗██╔═══██╗╚══██╔══╝")
-console.log("  ███████║██║   ██║██║   ██║███████║    ███████║██╔██╗ ██║██║  ██║    ███████╗ ╚████╔╝ █████╗  █████╗  ███████╗    ██║     ██║   ██║██████╔╝██████╔╝ ╚████╔╝     ██████╔╝██║   ██║   ██║   ")
-console.log("  ██╔══██║██║▄▄ ██║██║   ██║██╔══██║    ██╔══██║██║╚██╗██║██║  ██║    ╚════██║  ╚██╔╝  ██╔══╝  ██╔══╝  ╚════██║    ██║     ██║   ██║██╔══██╗██╔══██╗  ╚██╔╝      ██╔══██╗██║   ██║   ██║   ")
-console.log("  ██║  ██║╚██████╔╝╚██████╔╝██║  ██║    ██║  ██║██║ ╚████║██████╔╝    ███████║   ██║   ██║     ███████╗███████║    ███████╗╚██████╔╝██████╔╝██████╔╝   ██║       ██████╔╝╚██████╔╝   ██║   ")
-console.log("  ╚═╝  ╚═╝ ╚══▀▀═╝  ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝     ╚══════╝   ╚═╝   ╚═╝     ╚══════╝╚══════╝    ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝    ╚═╝       ╚═════╝  ╚═════╝    ╚═╝   ")
-console.log("                                                                                                                                                                                           ")
+const request = require("request-promise");
+const EGClient = require("epicgames-client").Client;
+const Fortnite = require("epicgames-fortnite-client");
+const EInputType = require("epicgames-client").EInputType;
 
-const EGClient = require('epicgames-client').Client;
-const Fortnite = require('epicgames-fortnite-client');
-const { ESubGame } = Fortnite;
+var _ = require("lodash");
+
+accountid = "";
+status = "Red AndG";
+
 let eg = new EGClient({
-  email: "FNGQFN",
-  password: "Ktp19AwzETJX",
-  debug: console.log,
-  });
-  eg.init().then(async (success) => {
-    console.log("Client startup successful")
-    if(!success)
-      throw new Error('Cannot initialize EpicGames launcher.');
-    if(!await eg.login())
-      throw new Error('Cannot login on EpicGames account.');
-      const fortnite = await eg.runGame(Fortnite, {
-  netCL: '7681591',
-  partyBuildId: '1:1:7681591',
-  });
-  console.log("Parsed partyBuildId and netCL")
-  console.log("Setting EGClient subgame to BattleRoyale")
-    const br = await fortnite.runSubGame(ESubGame.BattleRoyale);
-    console.log("Set EGClient subgame to BattleRoyale")
-    fortnite.communicator.on('party:member:joined', async (member) => {
-      console.log("Parsing invite join request")
-      console.log(`Member#${member.id} joined!`);
-      console.log(`Members count: ${fortnite.party.members.length}`);
-      console.log(`Setting client party outfits to Member#${member.id}`)
-      fortnite.party.me.setOutfit("/Game/Athena/Items/Cosmetics/Characters/CID_313_Athena_Commando_M_KpopFashion.CID_313_Athena_Commando_M_KpopFashion");
-      fortnite.party.me.setBackpack("/Game/Athena/Items/Cosmetics/Backpacks/BID_138_Celestial.BID_138_Celestial");
-      fortnite.party.me.setEmote("/Game/Athena/Items/Cosmetics/Dances/EID_Breakboy.EID_Breakboy");
-      fortnite.party.me.setBattlePass(true, 99999999999999999999999999999999999999999999999999999999999, 420, 99999999999999999999999999999999999999999999999999999999999);
+    email: "FNGQFN@gmail.com",
+    password: "Ktp19AwzETJX",
+    debug: console.log
+});
+
+(async _ => {
+    var c_party;
+
+    if (!await eg.init() || !await eg.login()) {
+        throw "Cannot connect to Epic Games servers...";
+    }
+
+    let communicator = eg.communicator;
+    let fortnite = await eg.runGame(Fortnite, {
+        netCL: "7681591",
+        partyBuildId: "1:1:7681591",
+        build: "++Fortnite+Release-10.20-CL-8243923",
+        engineBuild: "4.23.0-8243923+++Fortnite+Release-10.20"
     });
-    fortnite.communicator.on('party:invitation', async (invitation) => {
-      console.log("Party invitation found")
-      current_party = invitation.party;
-      await invitation.accept()
-      console.log("Party invitation accepted")
+    communicator.updateStatus(status);
+    communicator.on("friend:request", async data => {
+        if (data.friend.id != accountid) {
+            eg.acceptFriendRequest(data.friend.id).then(async (ac_result) => {
+                /*adding friend ops was successful*/
+            });
+        }
     });
-    fortnite.communicator.on('friend:request', async (friendops) => {
-        console.log("Recieved friend request from " + friendops.friend.id)
-        eg.acceptFriendRequest(friendops.friend.id)
-        console.log("Sucessfully accepted " + friendops.friend.id + " friend request")
+
+    fortnite.communicator.on("party:invitation", async invitation => {
+        c_party = invitation.party;
+        await invitation.accept();
+        invitation.party.me.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/CID_029_Athena_Commando_F_Halloween.CID_029_Athena_Commando_F_Halloween");
+        invitation.party.me.setBattlePass(false, 0, 0, 0);
     });
+
+    fortnite.communicator.on("friend:message", async data => {
+        if (data.message == "help") {
+            communicator.sendMessage(data.friend.id, "Commands: !skin, !emote, !backbling, !banner, !stop");
+            return;
+        }
+
+        if (data.message.startsWith("!")) {
+            console.log("Processing command: " + data.message.substring(1))
+            var args = data.message.substring(1).split(" ");
+
+            switch (args[0]) {
+                case "skin":
+                    c_party.members.forEach(async member => {
+                        try {
+                            member.clearEmote(member.jid);
+                            member.setBRCharacter("/Game/Athena/Items/Cosmetics/Characters/" + args[1] + "." + args[1], member.jid);
+                        } catch (e) {
+                            communicator.sendMessage(data.friend.id, "Can't set skin because it is invalid skin!");
+                        }
+                    });
+                    break;
+                case "status":
+                    fortnite.communicator.updateStatus(args[1] + args[2] + args[3]);
+                    communicator.updateStatus(args[1] + args[2] + args[3]);
+                    break;
+                case "emote":
+                    c_party.members.forEach(async member => {
+                        try {
+                            member.setEmote("/Game/Athena/Items/Cosmetics/Dances/" + args[1] + "." + args[1], member.jid);
+                        } catch (e) {
+                            communicator.sendMessage(data.friend.id, "Can't set emote because it is invalid emote!");
+                        }
+                    });
+                    break;
+                case "backbling":
+                    console.log("attempted changing backbling")
+                    c_party.members.forEach(async member => {
+                        try {
+                            member.setBackpack("/Game/Athena/Items/Cosmetics/Backpacks/" + args[1] + "." + args[1], member.jid);
+                        } catch (e) {
+                            communicator.sendMessage(data.friend.id, "Can't set backbling because it is invalid backbling!");
+                        }
+                    });
+                    break;
+                case "epicbanner":
+                    args = data.message.split(" ").toUpperCase;
+                    c_party.members.forEach(async member => {
+                        try {
+                            member.setBRBanner("Otherbanner28", "defaultcolor1", 12, member.jid)
+                        } catch (e) {
+                            communicator.sendMessage(data.friend.id, "Can't set banner because it is some error!");
+                        }
+                    });
+                    break;
+                case "ready":
+                    if (args[1] == "up" || args[1] == "down") {
+                        c_party.members.forEach(async member => {
+                            try {
+                                member.setReady(args[1] == "up" ? true : false, member.jid);
+                            } catch (e) {
+                                communicator.sendMessage(data.friend.id, "Can't set ready because it is unknown error!");
+                            }
+                        });
+                    } else {
+                        communicator.sendMessage(data.friend.id, "Can't set ready because it is invalid switch!");
+                    }
+
+                    break;
+                case "stop":
+                    c_party.members.forEach(async member => {
+                        member.clearEmote(member.jid);
+                    });
+                    break;
+                default:
+                    communicator.sendMessage(data.friend.id, "Unknown command: " + args[0]);
+                    break;
+            }
+        }
     });
+})();
